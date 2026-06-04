@@ -24,14 +24,56 @@ EnglishAssist 是一个面向英语课堂词汇复习场景的微信小程序。
 
 ## 演示视频
 
-以下视频展示了老师端和学生端的主要使用流程：
+以下预览展示了老师端和学生端的主要使用流程，点击预览可查看原视频。
 
-- [老师注册](demo/teacher-register.mp4)
-- [老师创建班级](demo/teacher-class-create.mp4)
-- [老师发布任务](demo/teacher-publish-task.mp4)
-- [学生注册](demo/student-register.mp4)
-- [学生加入班级](demo/student-add-class.mp4)
-- [学生完成任务](demo/student-finish-task.mp4)
+<table>
+  <tr>
+    <td align="center">
+      <a href="demo/teacher-register.mp4">
+        <img src="demo/previews/teacher-register.gif" width="220" alt="老师注册演示">
+      </a>
+      <br>
+      <strong>老师注册</strong>
+    </td>
+    <td align="center">
+      <a href="demo/teacher-class-create.mp4">
+        <img src="demo/previews/teacher-class-create.gif" width="220" alt="老师创建班级演示">
+      </a>
+      <br>
+      <strong>老师创建班级</strong>
+    </td>
+    <td align="center">
+      <a href="demo/teacher-publish-task.mp4">
+        <img src="demo/previews/teacher-publish-task.gif" width="220" alt="老师发布任务演示">
+      </a>
+      <br>
+      <strong>老师发布任务</strong>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="demo/student-register.mp4">
+        <img src="demo/previews/student-register.gif" width="220" alt="学生注册演示">
+      </a>
+      <br>
+      <strong>学生注册</strong>
+    </td>
+    <td align="center">
+      <a href="demo/student-add-class.mp4">
+        <img src="demo/previews/student-add-class.gif" width="220" alt="学生加入班级演示">
+      </a>
+      <br>
+      <strong>学生加入班级</strong>
+    </td>
+    <td align="center">
+      <a href="demo/student-finish-task.mp4">
+        <img src="demo/previews/student-finish-task.gif" width="220" alt="学生完成任务演示">
+      </a>
+      <br>
+      <strong>学生完成任务</strong>
+    </td>
+  </tr>
+</table>
 
 ## 项目结构
 
