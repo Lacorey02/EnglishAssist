@@ -24,13 +24,14 @@ EnglishAssist 是一个面向英语课堂词汇复习场景的微信小程序。
 
 ## 演示视频
 
-演示视频可以放在 `demo/` 目录中。建议按下面的方式命名，之后可以直接把链接补到这里：
+以下视频展示了老师端和学生端的主要使用流程：
 
-- 老师发布任务：`demo/teacher-task-publish.mp4`
-- 学生完成练习：`demo/student-challenge.mp4`
-- 老师查看报告：`demo/teacher-report.mp4`
-
-如果视频文件比较大，建议上传到 GitHub Releases、Bilibili 或其他视频平台，然后在这里放外部链接。
+- [老师注册](demo/teacher-register.mp4)
+- [老师创建班级](demo/teacher-class-create.mp4)
+- [老师发布任务](demo/teacher-publish-task.mp4)
+- [学生注册](demo/student-register.mp4)
+- [学生加入班级](demo/student-add-class.mp4)
+- [学生完成任务](demo/student-finish-task.mp4)
 
 ## 项目结构
 
@@ -40,18 +41,3 @@ EnglishAssist 是一个面向英语课堂词汇复习场景的微信小程序。
 - `cloudfunctions/`：云函数
 - `app.js` / `app.json` / `app.wxss`：小程序全局配置
 - `project.config.json`：微信开发者工具项目配置
-
-## 如何运行
-
-1. 打开微信开发者工具。
-2. 选择“导入项目”。
-3. 导入本项目目录。
-4. 使用测试号或自己的小程序 AppID 打开项目。
-
-项目使用微信小程序原生语法开发，不需要额外构建步骤。
-
-## 说明
-
-- `docs/` 目录是开发过程文档，默认不上传到仓库。
-- `project.private.config.json` 是本机私有配置，默认不上传到仓库。
-- 如需启用云函数，请在微信开发者工具中配置云开发环境，并在 `utils/cloud-service.js` 中填写云环境 ID。

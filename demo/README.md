@@ -1,9 +1,10 @@
-# Demo Videos
+# 演示视频
 
-Put demo videos for the project in this folder.
+这个目录用于存放 EnglishAssist 的演示视频。
 
-Recommended filenames:
-
-- `teacher-task-publish.mp4`
-- `student-challenge.mp4`
-- `teacher-report.mp4`
+- `teacher-register.mp4`：老师注册
+- `teacher-class-create.mp4`：老师创建班级
+- `teacher-publish-task.mp4`：老师发布任务
+- `student-register.mp4`：学生注册
+- `student-add-class.mp4`：学生加入班级
+- `student-finish-task.mp4`：学生完成任务
