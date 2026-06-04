@@ -1,0 +1,21 @@
+<view class="page-shell {{themeClass}} pre-entry-shell">
+  <custom-nav title="课堂词汇打卡" themeMode="{{themeMode}}" />
+  <view class="pre-entry-main">
+    <view class="hero-card pre-entry-card">
+      <view class="brand-lockup">
+        <view class="brand-mark">Aa</view>
+        <view class="hero-title">课堂词汇打卡</view>
+        <view class="word-tile-row">
+          <view class="word-tile">listen</view>
+          <view class="word-tile word-tile--warm">spell</view>
+          <view class="word-tile">speak</view>
+        </view>
+      </view>
+      <view class="pre-entry-actions">
+        <button class="primary-btn" bindtap="goAccountLogin">登录</button>
+        <button class="secondary-btn" bindtap="goAccountRegister">注册</button>
+      </view>
+    </view>
+  </view>
+  <view class="pre-entry-footer"></view>
+</view>

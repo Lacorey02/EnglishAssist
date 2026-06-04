@@ -1,0 +1,16 @@
+.class-edit-save-btn {
+  width: 100%;
+  margin-top: 28rpx;
+}
+
+.member-row .student-head {
+  align-items: center;
+}
+
+.member-action-btn {
+  flex: none;
+  min-height: 64rpx;
+  padding: 0 22rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}

@@ -1,0 +1,10 @@
+<view class="page-shell {{themeClass}}">
+  <custom-nav title="课堂词汇打卡" themeMode="{{themeMode}}" />
+  <view class="hero-card">
+    <view class="hero-badge">课堂词汇打卡</view>
+    <view class="hero-title">正在进入小程序</view>
+    <view class="hero-desc">
+      正在根据当前登录状态和默认身份打开对应页面。
+    </view>
+  </view>
+</view>

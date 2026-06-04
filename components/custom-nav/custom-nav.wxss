@@ -1,0 +1,72 @@
+.custom-nav {
+  position: relative;
+  left: 50%;
+  width: 750rpx;
+  margin: -32rpx 0 26rpx;
+  transform: translateX(-50%);
+  flex: none;
+  background: #f8f7f1;
+  color: #17202a;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid rgba(80, 108, 106, 0.1);
+}
+
+.custom-nav__status {
+  width: 100%;
+  background: inherit;
+}
+
+.custom-nav__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-left: 24rpx;
+  box-sizing: border-box;
+  background: inherit;
+}
+
+.custom-nav__button {
+  width: 68rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16rpx;
+  color: inherit;
+  font-size: 46rpx;
+  font-weight: 700;
+  line-height: 1;
+  z-index: 2;
+}
+
+.custom-nav__button--hover {
+  background: rgba(23, 107, 135, 0.1);
+}
+
+.custom-nav__title {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  color: inherit;
+  font-size: 32rpx;
+  font-weight: 800;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.custom-nav.theme-dark {
+  background: #101719;
+  color: #eef6f4;
+  border-bottom-color: rgba(139, 169, 165, 0.14);
+}
+
+.custom-nav.theme-dark .custom-nav__button--hover {
+  background: rgba(143, 224, 210, 0.14);
+}

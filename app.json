@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/accountLogin/accountLogin",
+    "pages/accountRegister/accountRegister",
+    "pages/role/role",
+    "pages/teacher/teacher",
+    "pages/teacherClasses/teacherClasses",
+    "pages/classCreate/classCreate",
+    "pages/teacherJoin/teacherJoin",
+    "pages/classEdit/classEdit",
+    "pages/classDetail/classDetail",
+    "pages/mine/mine",
+    "pages/accountManage/accountManage",
+    "pages/classManage/classManage",
+    "pages/taskPublish/taskPublish",
+    "pages/studentHome/studentHome",
+    "pages/studentJoin/studentJoin",
+    "pages/studentClass/studentClass",
+    "pages/student/student",
+    "pages/challenge/challenge",
+    "pages/result/result",
+    "pages/report/report",
+    "pages/home/home"
+  ],
+  "window": {
+    "navigationBarTitleText": "课堂词汇打卡",
+    "navigationBarBackgroundColor": "#F8F7F1",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F8F7F1",
+    "backgroundColorTop": "#EEF7F2",
+    "backgroundColorBottom": "#EDF4F8",
+    "backgroundTextStyle": "light",
+    "navigationStyle": "custom"
+  },
+  "usingComponents": {
+    "bottom-nav": "/components/bottom-nav/bottom-nav",
+    "custom-nav": "/components/custom-nav/custom-nav"
+  },
+  "permission": {
+    "scope.record": {
+      "desc": "用于完成单词朗读练习、发音评分和老师语音录入"
+    },
+    "scope.camera": {
+      "desc": "用于拍摄课堂单词图片并导入任务草稿"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

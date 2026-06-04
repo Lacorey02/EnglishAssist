@@ -1,0 +1,40 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab">
+  <custom-nav title="管理班级" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="hero-card">
+    <view class="hero-badge">老师</view>
+    <view class="hero-title">我的班级</view>
+    <view class="hero-meta-row">
+      <view class="hero-metric">
+        <view class="hero-metric__value">{{classes.length}}</view>
+        <view class="hero-metric__label">班级</view>
+      </view>
+      <view class="hero-metric">
+        <view class="hero-metric__value">管理</view>
+        <view class="hero-metric__label">任务与学生进度</view>
+      </view>
+    </view>
+    <view class="class-action-row teacher-classes-action-row">
+      <button class="secondary-btn action-btn teacher-classes-create" bindtap="goCreateClass">新建班级</button>
+      <button class="secondary-btn action-btn teacher-classes-create" bindtap="goJoinClass">加入班级</button>
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view wx:if="{{classes.length}}">
+      <view wx:for="{{classes}}" wx:key="id" class="task-card" hover-class="pressable-hover" data-class-id="{{item.id}}" bindtap="openClass">
+        <view class="task-head">
+          <view class="task-title">{{item.name}}</view>
+          <view class="tag">{{item.roleLabel}}</view>
+        </view>
+        <view class="task-meta">班级代号：{{item.code}}</view>
+        <view class="task-meta">创建老师：{{item.teacherName}} · 学生 {{item.studentCount}} 人</view>
+      </view>
+    </view>
+
+    <view wx:else class="section-card empty-state teacher-classes-empty">
+      <view class="empty-text">还没有创建或加入班级</view>
+    </view>
+  </view>
+
+  <bottom-nav active="home" role="teacher" class-id="{{classId}}" account-id="{{accountId}}" />
+</view>

@@ -1,0 +1,10 @@
+<view class="bottom-nav {{themeClass}}">
+  <view class="bottom-nav__item {{active === 'home' ? 'bottom-nav__item--active' : ''}}" hover-class="pressable-hover" bindtap="goHome">
+    <view class="bottom-nav__icon">⌂</view>
+    <view>主页</view>
+  </view>
+  <view class="bottom-nav__item {{active === 'mine' ? 'bottom-nav__item--active' : ''}}" hover-class="pressable-hover" bindtap="goMine">
+    <view class="bottom-nav__icon">◎</view>
+    <view>我的</view>
+  </view>
+</view>

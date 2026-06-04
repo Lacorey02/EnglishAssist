@@ -1,0 +1,26 @@
+<view class="custom-nav {{themeClass}}" style="height: {{totalHeight}}px;">
+  <view class="custom-nav__status" style="height: {{statusBarHeight}}px;"></view>
+  <view class="custom-nav__bar" style="height: {{navBarHeight}}px; padding-right: {{rightInset}}px;">
+    <view
+      wx:if="{{showBack && canGoBack}}"
+      class="custom-nav__button"
+      hover-class="custom-nav__button--hover"
+      bindtap="goBack"
+      aria-label="返回"
+    >
+      ‹
+    </view>
+    <view
+      wx:elif="{{showHome}}"
+      class="custom-nav__button"
+      hover-class="custom-nav__button--hover"
+      bindtap="goHome"
+      aria-label="首页"
+    >
+      ⌂
+    </view>
+    <view class="custom-nav__title" style="left: {{titleSideInset}}px; right: {{rightInset}}px;">
+      {{title}}
+    </view>
+  </view>
+</view>

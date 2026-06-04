@@ -1,0 +1,125 @@
+<view class="page-shell {{themeClass}} challenge-page" wx:if="{{task && currentQuestion}}">
+  <custom-nav title="词汇闯关" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="question-card challenge-card">
+    <view class="challenge-head">
+      <view class="hero-badge challenge-type">{{currentQuestion.title}}</view>
+      <view class="challenge-progress">{{passedCount}} / {{totalCards}}</view>
+    </view>
+
+    <view class="challenge-progress-bar">
+      <view class="challenge-progress-fill" style="width: {{progress}}%;"></view>
+    </view>
+
+    <view class="challenge-main">
+      <view class="question-core">
+        <view class="question-stem-row">
+          <view
+            class="question-stem {{currentQuestion.taskType === 'spell_missing' ? 'question-stem--missing' : ''}} {{currentQuestion.taskType === 'zh_to_en' ? 'question-stem--meaning' : ''}}"
+          >
+            {{currentQuestion.stem}}
+          </view>
+          <button class="speaker-btn" hover-class="pressable-hover" bindtap="playCurrentAudio">🔊</button>
+        </view>
+
+        <view
+          wx:if="{{currentQuestion.phonetic && (currentQuestion.taskType === 'en_to_zh' || currentQuestion.taskType === 'read_aloud' || currentQuestion.taskType === 'spell_missing')}}"
+          class="question-hint question-hint--primary"
+        >
+          {{currentQuestion.phonetic}}
+        </view>
+
+        <view wx:if="{{currentQuestion.taskType === 'spell_missing'}}" class="question-hint">
+          中文释义：{{currentQuestion.hint}}
+        </view>
+
+        <view wx:if="{{currentQuestion.taskType === 'audio_to_word'}}" class="question-hint">
+          点击小喇叭可重复播放读音。
+        </view>
+      </view>
+
+      <view class="challenge-interaction">
+        <view wx:if="{{currentQuestion.taskType === 'en_to_zh' || currentQuestion.taskType === 'zh_to_en' || currentQuestion.taskType === 'audio_to_word'}}" class="option-list">
+          <button
+            wx:for="{{currentQuestion.options}}"
+            wx:key="value"
+            class="option-btn {{selectedOption === item.value ? 'option-btn--selected' : ''}}"
+            data-value="{{item.value}}"
+            bindtap="selectOption"
+          >
+            {{item.label}}
+          </button>
+        </view>
+
+        <view wx:elif="{{currentQuestion.taskType === 'read_aloud'}}" class="read-aloud-box">
+          <view class="question-hint read-aloud-guide">先听标准读音，再读出这个单词。</view>
+          <view class="read-aloud-stats">
+            <view>尝试：{{readAloudAttemptCount}} 次</view>
+            <view>最高分：{{readAloudBestScoreLabel}}</view>
+          </view>
+          <button
+            class="{{isRecording ? 'warn-btn' : 'secondary-btn'}}"
+            disabled="{{recordButtonDisabled}}"
+            bindtap="toggleRecording"
+          >
+            {{recordButtonText}}
+          </button>
+          <view wx:if="{{speakingStatus === 'recording'}}" class="feedback-box">
+            正在录音...
+          </view>
+          <view wx:if="{{speakingStatus === 'scoring'}}" class="feedback-box">
+            正在评分...
+          </view>
+          <view
+            wx:if="{{speakingStatus === 'failed' || speakingStatus === 'passed'}}"
+            class="feedback-box {{speakingPassed ? 'feedback-box--correct' : 'feedback-box--wrong'}}"
+          >
+            <view>{{speakingMessage}}</view>
+            <view wx:if="{{hasSpeakingScore}}" class="tiny-text" style="margin-top: 8rpx;">本次得分：{{speakingScoreLabel}} / 100</view>
+            <view wx:if="{{readAloudLastDurationLabel}}" class="tiny-text">录音时长：{{readAloudLastDurationLabel}}</view>
+          </view>
+          <view wx:if="{{showRecordingDebug}}" class="record-debug-box">
+            <view class="tiny-text">{{recordingDebugText}}</view>
+            <view wx:if="{{recordingTempFilePath}}" class="tiny-text">临时文件：{{recordingTempFilePath}}</view>
+            <view wx:if="{{recordingFileSizeLabel}}" class="tiny-text">文件大小：{{recordingFileSizeLabel}}</view>
+            <button wx:if="{{recordingTempFilePath}}" class="ghost-btn record-playback-btn" bindtap="playLastRecording">回放录音</button>
+            <view wx:if="{{recordingPlaybackText}}" class="tiny-text">{{recordingPlaybackText}}</view>
+            <view class="tiny-text">{{devtoolsMicNotice}}</view>
+          </view>
+        </view>
+
+        <view wx:else class="spell-box">
+          <input
+            class="text-input"
+            placeholder-class="input-placeholder"
+            placeholder="输入完整英文单词"
+            value="{{inputAnswer}}"
+            bindinput="onInputChange"
+          />
+          <button class="secondary-btn" bindtap="submitSpelling">提交答案</button>
+        </view>
+      </view>
+
+      <view
+        wx:if="{{isAnswered && currentQuestion.taskType !== 'read_aloud'}}"
+        class="feedback-box {{answerCorrect ? 'feedback-box--correct' : 'feedback-box--wrong'}}"
+      >
+        <view>{{answerCorrect ? "回答正确" : "回答有误"}}</view>
+        <view class="tiny-text" style="margin-top: 8rpx;">正确答案：{{currentQuestion.correctAnswer}}</view>
+        <view class="tiny-text">{{currentQuestion.explanation}}</view>
+      </view>
+    </view>
+
+    <view class="task-actions">
+      <button class="primary-btn" bindtap="nextQuestion">
+        {{currentQuestion.taskType === 'read_aloud' && !speakingPassed ? "达到 60 分后继续" : (pendingQueue.length || retryQueue.length) ? "下一关" : "提交并查看结果"}}
+      </button>
+    </view>
+  </view>
+</view>
+
+<view wx:else class="page-shell {{themeClass}} challenge-page">
+  <custom-nav title="词汇闯关" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="section-card empty-state">
+    <view class="empty-text">正在加载题目，请返回上一页重试。</view>
+  </view>
+</view>

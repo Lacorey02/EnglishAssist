@@ -1,0 +1,8 @@
+.result-card .stat-value {
+  font-size: 34rpx;
+}
+
+.result-task-meta {
+  margin-top: 12rpx;
+  text-align: center;
+}

@@ -1,0 +1,222 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab" wx:if="{{classInfo}}">
+  <custom-nav title="发布任务" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="hero-card">
+    <view class="hero-badge">{{classInfo.name}}</view>
+    <view class="hero-title">发布课堂词汇任务</view>
+    <view class="hero-desc">
+      输入英文重点词，系统会自动补充中文释义，学生会在这个班级内看到复习任务。
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="section-head">
+      <view class="section-title">任务内容</view>
+      <view class="publish-action-row">
+        <button class="secondary-btn" size="mini" bindtap="useExampleWords">填入示例</button>
+        <button class="secondary-btn" size="mini" bindtap="choosePhotoImport">拍照导入</button>
+        <button
+          class="{{isVoiceRecording ? 'warn-btn' : 'secondary-btn'}}"
+          size="mini"
+          disabled="{{voiceButtonDisabled || !voiceCloudReady}}"
+          bindtap="toggleVoiceInput"
+        >
+          {{voiceCloudReady ? voiceButtonText : "语音未配置"}}
+        </button>
+      </view>
+    </view>
+    <view class="section-card">
+      <view class="field-block">
+        <text class="field-label">任务标题</text>
+        <input class="text-input" placeholder-class="input-placeholder" placeholder="例如：七下 Unit 7 课堂重点词汇" value="{{lessonTitle}}" bindinput="onLessonInput" />
+      </view>
+      <view class="field-block">
+        <text class="field-label">截止时间</text>
+        <view class="due-field" hover-class="pressable-hover" bindtap="openDuePicker">
+          <view>
+            <view class="due-field__value">{{dueLabel}}</view>
+            <view class="due-field__meta">{{dueDate}} {{dueTime}}</view>
+          </view>
+          <view class="due-field__icon">›</view>
+        </view>
+      </view>
+      <view class="field-block">
+        <text class="field-label">任务对象</text>
+        <view class="assignment-segment">
+          <view
+            class="assignment-segment__item {{assignmentMode === 'all' ? 'assignment-segment__item--active' : ''}}"
+            data-mode="all"
+            bindtap="selectAssignmentMode"
+          >
+            全班学生
+          </view>
+          <view
+            class="assignment-segment__item {{assignmentMode === 'selected' ? 'assignment-segment__item--active' : ''}}"
+            data-mode="selected"
+            bindtap="selectAssignmentMode"
+          >
+            指定学生
+          </view>
+        </view>
+        <view class="assignment-meta">
+          {{assignmentMode === 'all' ? assignmentAllLabel : assignmentSelectedLabel}}
+        </view>
+        <view wx:if="{{assignmentNotice}}" class="tip-box assignment-notice">
+          {{assignmentNotice}}
+        </view>
+        <view wx:elif="{{assignmentMode === 'selected'}}" class="assignment-panel">
+          <view class="assignment-panel__head">
+            <view>已选择 {{selectedStudentCount}} 人</view>
+            <view class="assignment-select-all" hover-class="pressable-hover" bindtap="selectAllStudents">全选</view>
+          </view>
+          <view wx:for="{{students}}" wx:key="id" class="student-check {{item.selected ? 'student-check--selected' : ''}}" data-student-id="{{item.id}}" bindtap="toggleAssignedStudent">
+            <view class="student-check__mark">{{item.selected ? '✓' : ''}}</view>
+            <view class="student-check__name">{{item.displayName}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="field-block">
+        <text class="field-label">老师备注</text>
+        <input class="text-input" placeholder-class="input-placeholder" placeholder="例如：先闯关，再看错词" value="{{teacherNote}}" bindinput="onNoteInput" />
+      </view>
+      <view wx:if="{{photoImportVisible}}" class="photo-import-card">
+        <view class="photo-import-head">
+          <view class="photo-import-title">拍照导入卡片</view>
+          <view class="tag">{{photoImportStatus === 'confirmed' ? '已导入' : '草稿'}}</view>
+        </view>
+        <image
+          wx:if="{{photoImportImagePath}}"
+          class="photo-import-image"
+          mode="aspectFit"
+          src="{{photoImportImagePath}}"
+        />
+        <view class="tip-box photo-import-message">{{photoImportMessage || "请检查单词草稿，确认后导入任务"}}</view>
+        <view class="field-block">
+          <text class="field-label">单词草稿</text>
+          <textarea
+            class="text-area photo-import-draft"
+            placeholder-class="textarea-placeholder"
+            placeholder="每行一个英文单词"
+            value="{{photoImportDraftText}}"
+            bindinput="onPhotoDraftInput"
+          />
+        </view>
+        <view class="photo-import-actions">
+          <button class="primary-btn" bindtap="confirmPhotoImport">确认导入</button>
+          <button class="secondary-btn" bindtap="choosePhotoImport">重新拍照</button>
+          <button class="ghost-btn" bindtap="cancelPhotoImport">取消</button>
+        </view>
+      </view>
+      <view class="field-block">
+        <text class="field-label">课堂重点词</text>
+        <textarea
+          class="text-area"
+          placeholder-class="textarea-placeholder"
+          placeholder="输入英文单词，支持换行、逗号或空格分隔"
+          value="{{wordInput}}"
+          bindinput="onWordInput"
+        />
+      </view>
+      <view wx:if="{{voiceMessage}}" class="tip-box">
+        <view>{{voiceMessage}}</view>
+        <view wx:if="{{voiceDurationLabel}}">录音时长：{{voiceDurationLabel}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="section-head">
+      <view class="section-title">词汇预览</view>
+      <view class="tag">{{previewWords.length}} 个词</view>
+    </view>
+    <view class="section-card">
+      <view wx:if="{{previewWords.length}}">
+        <view wx:if="{{meaningLookupMessage}}" class="tip-box">
+          {{meaningLookupMessage}}
+        </view>
+        <view wx:for="{{previewWords}}" wx:key="word" class="preview-word-row {{item.meaning ? '' : 'preview-word-row--missing'}}">
+          <view class="preview-word-head">
+            <view>
+              <view class="preview-word-title">{{item.word}}</view>
+              <view class="tiny-text">{{item.sourceLabel}}录入 · {{item.meaningSourceLabel}}</view>
+              <view wx:if="{{item.lookupError}}" class="tiny-text preview-error">{{item.lookupError}}</view>
+            </view>
+            <view class="preview-word-actions">
+              <view class="tag">{{item.meaningStatusLabel}}</view>
+              <button class="ghost-btn" size="mini" data-index="{{index}}" bindtap="removePreviewWord">删除</button>
+            </view>
+          </view>
+          <input
+            class="text-input preview-meaning-input"
+            placeholder-class="input-placeholder"
+            placeholder="手动补充中文释义"
+            value="{{item.meaning}}"
+            data-index="{{index}}"
+            bindinput="onMeaningInput"
+          />
+        </view>
+        <view wx:if="{{previewMissingCount}}" class="tip-box">
+          还有 {{previewMissingCount}} 个词缺少中文释义，补全后才能发布。
+        </view>
+      </view>
+      <view wx:else class="empty-text">录入英文单词后，这里会展示自动补全的释义。</view>
+      <button class="primary-btn publish-btn" bindtap="publishTask">发布到本班</button>
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="section-head">
+      <view class="section-title">本班最近任务</view>
+      <button class="ghost-btn" size="mini" bindtap="goClassDetail">回班级</button>
+    </view>
+    <view wx:if="{{recentTasks.length}}">
+      <view wx:for="{{recentTasks}}" wx:key="id" class="task-card">
+        <view class="task-head">
+          <view class="task-title">{{item.lessonTitle}}</view>
+          <view class="recent-task-tags">
+            <view class="tag">{{item.words.length}} 词</view>
+            <view class="tag">{{item.assignmentLabel}}</view>
+          </view>
+        </view>
+        <view class="task-meta">发布时间：{{item.createdAtLabel}}</view>
+        <view class="task-meta">截止时间：{{item.dueLabel}}</view>
+        <view class="task-actions">
+          <button class="ghost-btn" data-task-id="{{item.id}}" bindtap="openReport">看完成情况</button>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="section-card empty-state">
+      <view class="empty-text">这个班级还没有任务。</view>
+    </view>
+  </view>
+
+  <bottom-nav active="home" role="teacher" class-id="{{classInfo.id}}" account-id="{{accountId}}" />
+
+  <view wx:if="{{duePickerVisible}}" class="due-picker-mask" catchtap="cancelDuePicker">
+    <view class="due-picker-panel" catchtap="noop">
+      <view class="due-picker-head">
+        <view class="due-picker-title">选择截止时间</view>
+        <view class="due-picker-close" hover-class="pressable-hover" bindtap="cancelDuePicker">取消</view>
+      </view>
+      <view class="due-picker-row">
+        <view class="due-picker-label">截止日期</view>
+        <picker mode="date" value="{{dueDraftDate}}" start="{{minDueDate}}" end="{{maxDueDate}}" bindchange="onDueDateChange">
+          <view class="due-picker-value" hover-class="pressable-hover">{{dueDraftDate}}</view>
+        </picker>
+      </view>
+      <view class="due-picker-row">
+        <view class="due-picker-label">截止时间</view>
+        <picker mode="time" value="{{dueDraftTime}}" bindchange="onDueTimeChange">
+          <view class="due-picker-value" hover-class="pressable-hover">{{dueDraftTime}}</view>
+        </picker>
+      </view>
+      <button class="primary-btn due-picker-confirm" bindtap="confirmDuePicker">确定</button>
+    </view>
+  </view>
+</view>
+
+<view wx:else class="page-shell {{themeClass}}">
+  <custom-nav title="发布任务" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="section-card empty-state">
+    <view class="empty-text">请先从班级详情进入发布任务。</view>
+  </view>
+</view>

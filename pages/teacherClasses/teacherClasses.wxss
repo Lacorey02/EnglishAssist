@@ -1,0 +1,15 @@
+.empty-state .primary-btn {
+  width: 100%;
+}
+
+.teacher-classes-action-row {
+  margin-top: 24rpx;
+}
+
+.teacher-classes-create {
+  margin: 0;
+}
+
+.teacher-classes-empty {
+  min-height: 420rpx;
+}

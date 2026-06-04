@@ -1,0 +1,9 @@
+{
+  "desc": "English assistant pages sitemap",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab" wx:if="{{classInfo}}">
+  <custom-nav title="{{classInfo.name}}" showBack="{{true}}" themeMode="{{themeMode}}" />
+    <view class="hero-card">
+    <view class="hero-badge">班级代号：{{classInfo.code}}</view>
+    <view class="hero-title">{{classInfo.name}}</view>
+    <view class="hero-desc">
+      创建老师：{{teacherProfile ? teacherProfile.name : "老师"}} · 当前学生 {{students.length}} 人
+    </view>
+    <view class="tag class-role-tag">{{permissionLabel}}</view>
+    <view class="hero-meta-row">
+      <view class="hero-metric">
+        <view class="hero-metric__value">{{students.length}}</view>
+        <view class="hero-metric__label">学生</view>
+      </view>
+      <view class="hero-metric">
+        <view class="hero-metric__value">{{tasks.length}}</view>
+        <view class="hero-metric__label">已发布任务</view>
+      </view>
+    </view>
+    <view wx:if="{{canPublishTask}}" class="btn-row" style="margin-top: 28rpx;">
+      <button class="primary-btn" bindtap="publishTask">发布任务</button>
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="section-head">
+      <view class="section-title">学生列表</view>
+      <view class="tag">{{students.length}} 人</view>
+    </view>
+    <view wx:if="{{students.length}}">
+      <view wx:for="{{students}}" wx:key="id" class="student-row">
+        <view class="student-head">
+          <view class="student-name">{{item.name}}</view>
+          <view class="tag">已加入</view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="section-card empty-state">
+      <view class="empty-text">还没有学生加入班级</view>
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="section-head">
+      <view class="section-title">已发布任务</view>
+      <view class="tag">{{tasks.length}} 条</view>
+    </view>
+    <view wx:if="{{tasks.length}}">
+      <view wx:for="{{tasks}}" wx:key="id" class="task-card">
+        <view class="task-head">
+          <view class="task-title">{{item.lessonTitle}}</view>
+          <view class="task-card-tag-row">
+            <view class="tag">{{item.words.length}} 词</view>
+            <view class="tag">{{item.assignmentLabel}}</view>
+          </view>
+        </view>
+        <view class="task-meta">截止时间：{{item.dueLabel}}</view>
+        <view class="task-meta">发布时间：{{item.createdAtLabel}}</view>
+        <view class="task-card-actions">
+          <button class="ghost-btn task-action task-action-primary" data-task-id="{{item.id}}" bindtap="openReport">查看完成情况</button>
+          <button wx:if="{{canPublishTask}}" class="task-action task-action-danger" data-task-id="{{item.id}}" bindtap="askDeleteTask">删除</button>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="section-card empty-state">
+      <view class="empty-text">还没有发布任务</view>
+    </view>
+  </view>
+
+  <bottom-nav active="home" role="teacher" class-id="{{classInfo.id}}" account-id="{{accountId}}" />
+
+  <view wx:if="{{deleteTaskModalVisible}}" class="confirm-mask" catchtap="cancelDeleteTask">
+    <view class="confirm-dialog" catchtap="noop">
+      <view class="confirm-title">确定删除？</view>
+      <view class="confirm-desc">{{pendingDeleteTask.lessonTitle}}</view>
+      <view class="confirm-actions">
+        <button class="confirm-btn confirm-btn--cancel" bindtap="cancelDeleteTask">否</button>
+        <button class="confirm-btn confirm-btn--danger" bindtap="confirmDeleteTask">是</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view wx:else class="page-shell {{themeClass}}">
+  <custom-nav title="班级详情" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="section-card empty-state">
+    <view class="empty-text">班级不存在，或当前账号没有访问权限。</view>
+  </view>
+
+  <view class="logout-area">
+    <view class="logout-link" hover-class="pressable-hover" bindtap="logout">退出登录</view>
+  </view>
+</view>

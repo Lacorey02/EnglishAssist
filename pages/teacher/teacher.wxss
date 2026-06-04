@@ -1,0 +1,11 @@
+.teacher-home-action-row {
+  margin-top: 28rpx;
+}
+
+.teacher-home-create {
+  margin: 0;
+}
+
+.teacher-home-empty {
+  min-height: 420rpx;
+}

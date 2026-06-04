@@ -1,0 +1,72 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab">
+  <custom-nav title="编辑班级" showBack="{{true}}" themeMode="{{themeMode}}" />
+
+  <view wx:if="{{pageState === 'ready'}}">
+    <view class="section-block" style="margin-top: 0;">
+      <view class="section-head">
+        <view class="section-title">班级信息</view>
+      </view>
+      <view class="section-card">
+        <view class="field-block">
+          <text class="field-label">班级名称</text>
+          <input class="text-input" placeholder-class="input-placeholder" placeholder="请输入班级名称" value="{{className}}" bindinput="onNameInput" />
+        </view>
+        <view class="field-block">
+          <text class="field-label">班级代号</text>
+          <input class="text-input" placeholder-class="input-placeholder" placeholder="请输入班级代号" value="{{classCode}}" bindinput="onCodeInput" maxlength="8" />
+        </view>
+        <button class="primary-btn class-edit-save-btn" bindtap="saveClass">保存修改</button>
+      </view>
+    </view>
+
+    <view class="section-block">
+      <view class="section-head">
+        <view class="section-title">学生成员</view>
+        <view class="tag">{{students.length}} 人</view>
+      </view>
+      <view wx:if="{{students.length}}">
+        <view wx:for="{{students}}" wx:key="id" class="student-row member-row">
+          <view class="student-head">
+            <view>
+              <view class="student-name">{{item.name}}</view>
+              <view class="student-meta">账号：{{item.accountName || "未记录"}}</view>
+            </view>
+            <button class="warn-btn member-action-btn" data-student-id="{{item.id}}" bindtap="removeStudent">踢出</button>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="section-card empty-state">
+        <view class="empty-text">还没有学生加入班级</view>
+      </view>
+    </view>
+
+    <view class="section-block">
+      <view class="section-head">
+        <view class="section-title">老师成员</view>
+        <view class="tag">{{teachers.length}} 人</view>
+      </view>
+      <view wx:if="{{teachers.length}}">
+        <view wx:for="{{teachers}}" wx:key="teacherProfileId" class="student-row member-row">
+          <view class="student-head">
+            <view>
+              <view class="student-name">{{item.teacherName}}</view>
+              <view class="student-meta">{{item.roleLabel}}</view>
+            </view>
+            <button wx:if="{{item.canRemove}}" class="warn-btn member-action-btn" data-teacher-profile-id="{{item.teacherProfileId}}" bindtap="removeTeacher">踢出</button>
+            <view wx:else class="tag">创建者</view>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="section-card empty-state">
+        <view class="empty-text">还没有老师成员</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="section-card empty-state">
+    <view class="empty-text">{{errorText || "正在读取班级信息..."}}</view>
+    <button wx:if="{{pageState === 'forbidden'}}" class="primary-btn class-edit-save-btn" bindtap="goBack">返回</button>
+  </view>
+
+  <bottom-nav active="home" role="teacher" class-id="{{classInfo ? classInfo.id : ''}}" account-id="{{accountId}}" />
+</view>

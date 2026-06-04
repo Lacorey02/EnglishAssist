@@ -1,0 +1,9 @@
+.role-entry-card {
+  min-height: 500rpx;
+  justify-content: center;
+  gap: 48rpx;
+}
+
+.role-entry-card .pre-entry-actions {
+  margin-top: 0;
+}

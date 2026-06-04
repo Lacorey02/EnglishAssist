@@ -1,0 +1,58 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab" wx:if="{{pageState === 'ready' && classInfo && studentProfile}}">
+  <custom-nav title="班级" themeMode="{{themeMode}}" />
+  <view class="hero-card">
+    <view class="hero-badge">班级代号：{{classInfo.code}}</view>
+    <view class="hero-title">{{classInfo.name}}</view>
+    <view class="hero-desc">
+      老师：{{teacherProfile ? teacherProfile.name : "老师"}} · 学生：{{studentProfile.name}}
+    </view>
+    <view class="hero-meta-row">
+      <view class="hero-metric">
+        <view class="hero-metric__value">{{taskCount}}</view>
+        <view class="hero-metric__label">本班任务</view>
+      </view>
+      <view class="hero-metric">
+        <view class="hero-metric__value">{{completedCount}}</view>
+        <view class="hero-metric__label">已完成</view>
+      </view>
+    </view>
+    <view class="btn-row" style="margin-top: 28rpx;">
+      <button class="primary-btn" bindtap="goCheckin">去打卡</button>
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="section-head">
+      <view class="section-title">当前任务</view>
+    </view>
+    <view class="metric-grid">
+      <view class="stat-card">
+        <view class="stat-label">本班任务</view>
+        <view class="stat-value">{{taskCount}}</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-label">已完成</view>
+        <view class="stat-value">{{completedCount}}</view>
+      </view>
+    </view>
+  </view>
+
+  <bottom-nav active="home" role="student" class-id="{{classInfo.id}}" account-id="{{accountId}}" />
+</view>
+
+<view wx:else class="page-shell {{themeClass}}">
+  <custom-nav title="班级" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view wx:if="{{pageState === 'loading'}}" class="section-card empty-state">
+    <view class="empty-text">正在读取班级信息...</view>
+  </view>
+
+  <view wx:else class="section-card empty-state">
+    <view class="empty-text">{{errorText || "还没有加入可用班级。"}}</view>
+    <view class="btn-row" style="margin-top: 22rpx;">
+      <button class="primary-btn" bindtap="rejoinClass">重新加入班级</button>
+    </view>
+    <view class="logout-area">
+      <view class="logout-link" hover-class="pressable-hover" bindtap="logout">退出登录</view>
+    </view>
+  </view>
+</view>

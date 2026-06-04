@@ -1,0 +1,74 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab">
+  <custom-nav title="打卡任务" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="hero-card">
+    <view class="hero-badge">{{classInfo ? classInfo.name : "学生"}}</view>
+    <view class="hero-title">课堂词汇复习</view>
+    <view class="hero-desc">
+      {{currentStudent ? currentStudent.name : "学生"}} 可以在这里完成所在班级的词汇打卡任务。
+    </view>
+    <view wx:if="{{classInfo && currentStudent}}" class="hero-meta-row">
+      <view class="hero-metric">
+        <view class="hero-metric__value">{{completedCount}}</view>
+        <view class="hero-metric__label">已完成</view>
+      </view>
+      <view class="hero-metric">
+        <view class="hero-metric__value">{{taskCards.length - completedCount}}</view>
+        <view class="hero-metric__label">待打卡</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{classInfo && currentStudent}}" class="section-block">
+    <view class="section-head">
+      <view class="section-title">任务进度</view>
+      <button class="ghost-btn" size="mini" bindtap="goClassDetail">回班级</button>
+    </view>
+    <view class="section-card">
+      <view class="metric-grid">
+        <view class="stat-card">
+          <view class="stat-label">已完成任务</view>
+          <view class="stat-value">{{completedCount}}</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-label">待打卡任务</view>
+          <view class="stat-value">{{taskCards.length - completedCount}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{classInfo && currentStudent}}" class="section-block">
+    <view class="section-head">
+      <view class="section-title">打卡任务</view>
+      <view class="tag">{{taskCards.length}} 条</view>
+    </view>
+    <view wx:if="{{taskCards.length}}">
+      <view wx:for="{{taskCards}}" wx:key="id" class="task-card">
+        <view class="task-head">
+          <view class="task-title">{{item.lessonTitle}}</view>
+          <view class="tag">{{item.done ? "已完成" : "待打卡"}}</view>
+        </view>
+        <view class="task-meta">重点词数量：{{item.words.length}}</view>
+        <view class="task-meta">截止时间：{{item.dueLabel}}</view>
+        <view class="task-meta">老师备注：{{item.teacherNote}}</view>
+        <view wx:if="{{item.submission}}" class="tip-box" style="margin-top: 16rpx;">
+          上次成绩：{{item.submission.score}} 分，耗时 {{item.submission.durationSec}} 秒
+        </view>
+        <view class="task-actions">
+          <button class="{{item.done ? 'ghost-btn' : 'primary-btn'}}" data-task-id="{{item.id}}" data-done="{{item.done}}" bindtap="openTask">
+            {{item.done ? "查看结果" : "开始闯关"}}
+          </button>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="section-card empty-state">
+      <view class="empty-text">老师暂时还没有发布任务。</view>
+    </view>
+  </view>
+
+  <view wx:if="{{!classInfo || !currentStudent}}" class="section-card empty-state" style="margin-top: 28rpx;">
+    <view class="empty-text">请先加入班级。</view>
+  </view>
+
+  <bottom-nav active="home" role="student" class-id="{{classInfo ? classInfo.id : ''}}" account-id="{{accountId}}" />
+</view>

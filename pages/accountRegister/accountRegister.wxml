@@ -1,0 +1,27 @@
+<view class="page-shell {{themeClass}} pre-entry-shell">
+  <custom-nav title="注册" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="pre-entry-main">
+    <view class="section-block" style="margin-top: 0;">
+      <view class="section-head pre-entry-title">
+        <view class="section-title">注册</view>
+      </view>
+      <view class="section-card pre-entry-form-card">
+        <view class="field-block">
+          <text class="field-label">用户名</text>
+          <input class="text-input" placeholder-class="input-placeholder" placeholder="请输入用户名" value="{{username}}" bindinput="onUsernameInput" />
+        </view>
+        <view class="field-block">
+          <text class="field-label">密码</text>
+          <input class="text-input" password="true" placeholder-class="input-placeholder" placeholder="请输入密码" value="{{password}}" bindinput="onPasswordInput" />
+        </view>
+        <view class="field-block">
+          <text class="field-label">确认密码</text>
+          <input class="text-input" password="true" placeholder-class="input-placeholder" placeholder="请再次输入密码" value="{{confirmPassword}}" bindinput="onConfirmPasswordInput" />
+        </view>
+        <button class="primary-btn form-btn" bindtap="register">注册</button>
+        <view class="login-secondary" hover-class="pressable-hover" bindtap="goLogin">已有账号，去登录</view>
+      </view>
+    </view>
+  </view>
+  <view class="pre-entry-footer"></view>
+</view>

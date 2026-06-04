@@ -1,0 +1,79 @@
+<view class="page-shell {{themeClass}}" wx:if="{{submission && task && student}}">
+  <custom-nav title="打卡结果" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="result-card">
+    <view class="hero-badge">{{student.name}} · 本次打卡结果</view>
+    <view class="task-meta result-task-meta">{{task.lessonTitle}} · 截止时间：{{task.dueLabel}}</view>
+    <view class="score-circle">
+      <view class="score-number">{{submission.score}}</view>
+      <view class="score-label">综合得分</view>
+    </view>
+    <view class="metric-grid" style="margin-top: 24rpx;">
+      <view class="stat-card">
+        <view class="stat-label">答对题数</view>
+        <view class="stat-value">{{submission.correctCount}} / {{submission.totalCount}}</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-label">完成耗时</view>
+        <view class="stat-value">{{submission.durationSec}} 秒</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-label">班内排名</view>
+        <view class="stat-value">{{rankLabel}}</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-label">重做次数</view>
+        <view class="stat-value">{{submission.totalRetryCount}}</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-label">首轮错题</view>
+        <view class="stat-value">{{submission.firstRoundWrongCount}}</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-label">通关状态</view>
+        <view class="stat-value">{{submission.allPassed ? "全部通过" : "未全部通过"}}</view>
+      </view>
+      <view class="stat-card">
+        <view class="stat-label">提交时间</view>
+        <view class="stat-value" style="font-size: 28rpx;">{{submission.finishedAtLabel}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="section-head">
+      <view class="section-title">错词回看</view>
+      <view class="tag">{{submission.wrongWords.length}} 个</view>
+    </view>
+    <view wx:if="{{submission.wrongWords.length}}">
+      <view wx:for="{{submission.wrongWords}}" wx:key="challengeId" class="task-card">
+        <view class="task-head">
+          <view class="task-title">{{item.word}}</view>
+          <view class="tag">{{item.taskTitle || item.meaning}}</view>
+        </view>
+        <view class="task-meta">中文释义：{{item.meaning}}</view>
+        <view class="task-meta">你的答案：{{item.userAnswer}}</view>
+        <view class="task-meta">正确答案：{{item.correctAnswer}}</view>
+      </view>
+    </view>
+    <view wx:else class="section-card empty-state">
+      <view class="empty-text">这次没有错词，可以直接进入下一次复习。</view>
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="section-head">
+      <view class="section-title">下一步动作</view>
+    </view>
+    <view class="btn-row">
+      <button class="primary-btn" bindtap="goStudent">返回任务列表</button>
+      <button class="ghost-btn" bindtap="goClass">返回班级</button>
+    </view>
+  </view>
+</view>
+
+<view wx:else class="page-shell {{themeClass}}">
+  <custom-nav title="打卡结果" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="section-card empty-state">
+    <view class="empty-text">还没有这条结果，请先完成一次闯关。</view>
+  </view>
+</view>

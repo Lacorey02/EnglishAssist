@@ -1,0 +1,93 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab">
+  <custom-nav title="任务报告" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="hero-card">
+    <view class="hero-badge">任务报告</view>
+    <view class="hero-title">查看本班任务完成情况</view>
+    <view class="hero-desc">
+      {{classInfo ? classInfo.name : "选择一个班级任务"}} 的提交进度、平均分和错词会汇总在这里。
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="section-head">
+      <view class="section-title">选择任务</view>
+    </view>
+    <view class="section-card">
+      <picker mode="selector" range="{{tasks}}" range-key="lessonTitle" value="{{selectedTaskIndex}}" bindchange="onTaskChange">
+        <view class="picker-field">
+          <view>{{report ? report.task.lessonTitle : "暂无任务"}}</view>
+          <view class="muted">切换</view>
+        </view>
+      </picker>
+      <view wx:if="{{report}}" class="tiny-text" style="margin-top: 16rpx;">
+        班级：{{report.classInfo ? report.classInfo.name : "未关联班级"}} ｜ 截止时间：{{report.task.dueLabel}} ｜ 对象：{{report.stats.assignmentDetailLabel}}
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{report}}">
+    <view class="section-block">
+      <view class="section-head">
+        <view class="section-title">核心指标</view>
+      </view>
+      <view class="summary-grid">
+        <view class="stat-card">
+          <view class="stat-label">完成率</view>
+          <view class="stat-value">{{report.stats.completionRateLabel}}</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-label">平均分</view>
+          <view class="stat-value">{{report.stats.avgScoreLabel}}</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-label">已完成人数</view>
+          <view class="stat-value">{{report.stats.completedCount}}</view>
+        </view>
+        <view class="stat-card">
+          <view class="stat-label">目标人数</view>
+          <view class="stat-value">{{report.stats.totalStudents}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-block">
+      <view class="section-head">
+        <view class="section-title">高频错词</view>
+      </view>
+      <view class="section-card">
+        <view wx:if="{{report.hardestWords.length}}" class="chip-row">
+          <view wx:for="{{report.hardestWords}}" wx:key="word" class="word-chip word-chip--accent">
+            {{item.word}} · 错 {{item.wrongCount}} 次
+          </view>
+        </view>
+        <view wx:else class="empty-text">当前还没有错词数据。</view>
+      </view>
+    </view>
+
+    <view class="section-block">
+      <view class="section-head">
+        <view class="section-title">学生完成详情</view>
+      </view>
+      <view wx:for="{{report.rows}}" wx:key="id" class="student-row">
+        <view class="student-head">
+          <view>
+            <view class="student-name">{{item.student.name}}</view>
+            <view class="student-meta">{{item.statusText}}</view>
+          </view>
+          <view class="tag">{{item.scoreLabel}}</view>
+        </view>
+        <view class="student-meta">提交时间：{{item.finishedAtLabel}}</view>
+        <view class="student-meta">作答耗时：{{item.durationLabel}}</view>
+        <view class="student-meta">错词：{{item.wrongWordsPreview}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="section-block">
+    <view class="section-card empty-state">
+      <view class="empty-text">这个班级还没有任务，请先在班级详情里发布。</view>
+    </view>
+  </view>
+
+  <bottom-nav active="home" role="teacher" class-id="{{classInfo ? classInfo.id : ''}}" account-id="{{accountId}}" />
+</view>

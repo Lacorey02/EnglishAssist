@@ -1,0 +1,43 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab">
+  <custom-nav title="{{role === 'student' ? '班级' : '班级管理'}}" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view wx:if="{{role === 'teacher'}}" class="hero-card">
+    <view class="hero-badge">老师</view>
+    <view class="hero-title">班级</view>
+    <view class="hero-desc">管理你创建的班级，也可以加入其他老师的班级查看进度。</view>
+    <view class="class-action-row class-manage-top-actions">
+      <button class="secondary-btn action-btn class-manage-top-btn" bindtap="goCreateClass">新建班级</button>
+      <button class="secondary-btn action-btn class-manage-top-btn" bindtap="goJoinClass">加入班级</button>
+    </view>
+  </view>
+  <button wx:else class="primary-btn join-class-strip" bindtap="goJoinClass">加入新班级</button>
+
+  <view class="section-block class-manage-list-block">
+    <view wx:if="{{classes.length}}">
+      <view wx:for="{{classes}}" wx:key="id" class="manage-class-card">
+        <view class="task-head" hover-class="pressable-hover" data-class-id="{{item.id}}" bindtap="openClass">
+          <view>
+            <view class="task-title">{{item.name}}</view>
+            <view class="task-meta">{{role === 'teacher' ? '创建老师' : '老师'}}：{{item.teacherName}}</view>
+          </view>
+          <view class="tag">{{item.sideLabel}}</view>
+        </view>
+        <view wx:if="{{role === 'teacher'}}" class="task-meta">人数：{{item.studentCount}} 人</view>
+        <view wx:else class="task-meta">学生姓名：{{item.studentName}}</view>
+        <view class="task-meta">班级代号：{{item.code}}</view>
+        <view class="task-actions {{role === 'student' ? 'task-actions--single' : ''}}">
+          <button wx:if="{{role === 'teacher' && item.canEdit}}" class="ghost-btn" data-class-id="{{item.id}}" bindtap="editClass">编辑</button>
+          <button wx:elif="{{role === 'teacher'}}" class="ghost-btn" data-class-id="{{item.id}}" bindtap="openClass">查看班级</button>
+          <button wx:if="{{role === 'teacher' && item.canEdit}}" class="warn-btn" data-class-id="{{item.id}}" bindtap="deleteClass">删除班级</button>
+          <button wx:elif="{{role === 'teacher' && item.canLeaveAsTeacher}}" class="warn-btn" data-class-id="{{item.id}}" bindtap="leaveTeacherClass">退出班级</button>
+          <button wx:elif="{{role === 'student'}}" class="warn-btn leave-class-wide-btn" data-class-id="{{item.id}}" bindtap="leaveClass">退出班级</button>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="section-card empty-state">
+      <view class="empty-text">{{emptyText}}</view>
+    </view>
+  </view>
+
+  <bottom-nav active="mine" role="{{role}}" class-id="{{classId}}" account-id="{{accountId}}" />
+</view>

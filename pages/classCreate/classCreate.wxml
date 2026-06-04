@@ -1,0 +1,27 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab pre-entry-shell">
+  <custom-nav title="新建班级" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="pre-entry-main">
+    <view class="section-block" style="margin-top: 0;">
+      <view class="section-head pre-entry-title">
+        <view class="section-title">新建班级</view>
+      </view>
+      <view class="section-card pre-entry-form-card">
+        <view class="field-block">
+          <text class="field-label">老师姓名</text>
+          <input class="text-input" placeholder-class="input-placeholder" placeholder="例如：李老师" value="{{teacherName}}" bindinput="onTeacherNameInput" />
+        </view>
+        <view class="field-block">
+          <text class="field-label">班级名</text>
+          <input class="text-input" placeholder-class="input-placeholder" placeholder="例如：周二晚初二词汇班" value="{{className}}" bindinput="onNameInput" />
+        </view>
+        <view class="field-block">
+          <text class="field-label">班级代号</text>
+          <input class="text-input" placeholder-class="input-placeholder" placeholder="例如：A4K8Q2" value="{{classCode}}" bindinput="onCodeInput" maxlength="8" />
+          <button class="secondary-btn" style="margin-top: 16rpx;" bindtap="generateCode">随机生成代号</button>
+        </view>
+        <button class="primary-btn create-btn" bindtap="createClass">确认创建</button>
+      </view>
+    </view>
+  </view>
+  <bottom-nav active="home" role="teacher" account-id="{{accountId}}" />
+</view>

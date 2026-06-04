@@ -1,0 +1,13 @@
+.why-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.why-card {
+  margin-top: 0;
+}
+
+.nav-card + .nav-card {
+  margin-top: 0;
+}

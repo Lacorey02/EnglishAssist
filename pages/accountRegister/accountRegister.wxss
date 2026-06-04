@@ -1,0 +1,11 @@
+.form-btn {
+  width: 100%;
+  margin-top: 28rpx;
+}
+
+.login-secondary {
+  margin-top: 22rpx;
+  text-align: center;
+  color: #5f6f76;
+  font-size: 24rpx;
+}

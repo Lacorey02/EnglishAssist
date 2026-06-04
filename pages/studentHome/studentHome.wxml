@@ -1,0 +1,54 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab">
+  <custom-nav title="我的班级" themeMode="{{themeMode}}" />
+  <view class="hero-card student-home-hero">
+    <view class="hero-badge">学生</view>
+    <view class="hero-title">我的班级</view>
+    <view class="hero-desc">加入班级后，可以查看老师发布的词汇任务并开始打卡。</view>
+    <view class="hero-meta-row">
+      <view class="hero-metric">
+        <view class="hero-metric__value">{{classes.length}}</view>
+        <view class="hero-metric__label">已加入班级</view>
+      </view>
+      <view class="hero-metric">
+        <view class="hero-metric__value">复习</view>
+        <view class="hero-metric__label">闯关、朗读、错词回看</view>
+      </view>
+    </view>
+    <button class="secondary-btn student-home-join" bindtap="goJoinClass">加入班级</button>
+  </view>
+
+  <view class="section-block">
+    <view wx:if="{{pageState === 'loading'}}" class="section-card empty-state student-home-empty">
+      <view class="empty-text">正在读取学生信息...</view>
+    </view>
+
+    <view wx:elif="{{pageState === 'list'}}">
+      <view class="section-head">
+        <view class="section-title">班级列表</view>
+        <view class="tag">{{classes.length}} 个</view>
+      </view>
+      <view wx:for="{{classes}}" wx:key="id" class="task-card" hover-class="pressable-hover" data-class-id="{{item.id}}" bindtap="openClass">
+        <view class="task-head">
+          <view>
+            <view class="task-title">{{item.name}}</view>
+            <view class="task-meta">老师：{{item.teacherName}}</view>
+          </view>
+          <view class="tag">{{item.studentName}}</view>
+        </view>
+        <view class="task-meta">班级代号：{{item.code}}</view>
+      </view>
+    </view>
+
+    <view wx:elif="{{pageState === 'error'}}" class="section-card empty-state student-home-empty">
+      <view class="empty-text">{{errorText}}</view>
+      <button class="primary-btn student-home-empty-btn" bindtap="goJoinClass">重新加入班级</button>
+    </view>
+
+    <view wx:else class="section-card empty-state student-home-empty">
+      <view class="empty-text">还没有加入班级</view>
+      <button class="primary-btn student-home-empty-btn" bindtap="goJoinClass">加入班级</button>
+    </view>
+  </view>
+
+  <bottom-nav active="home" role="student" account-id="{{accountId}}" />
+</view>

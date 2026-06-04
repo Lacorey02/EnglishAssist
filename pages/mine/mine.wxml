@@ -1,0 +1,57 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab" wx:if="{{account}}">
+  <custom-nav title="我的" themeMode="{{themeMode}}" />
+  <view class="profile-card">
+    <view class="avatar-circle">{{avatarText}}</view>
+    <view>
+      <view class="profile-name">{{account.username}}</view>
+      <view class="hero-badge">{{roleLabel}}</view>
+    </view>
+  </view>
+
+  <view class="section-block">
+    <view class="mine-list">
+      <view class="mine-row" hover-class="pressable-hover" bindtap="openAccount">
+        <view>
+          <view class="mine-row__title">账号</view>
+          <view class="mine-row__meta">{{account.phone ? account.phone : "未绑定手机号"}}</view>
+        </view>
+        <view class="mine-row__arrow">›</view>
+      </view>
+      <view class="mine-row" hover-class="pressable-hover" bindtap="openClasses">
+        <view>
+          <view class="mine-row__title">班级</view>
+          <view class="mine-row__meta">{{role === 'student' ? '查看班级' : '查看和管理班级'}}</view>
+        </view>
+        <view class="mine-row__arrow">›</view>
+      </view>
+      <view class="mine-row" hover-class="pressable-hover" bindtap="toggleThemeMode">
+        <view>
+          <view class="mine-row__title">黑夜模式</view>
+          <view class="mine-row__meta">{{themeSwitchOn ? "已开启" : "已关闭"}}</view>
+        </view>
+        <switch
+          class="theme-switch-native"
+          checked="{{themeSwitchOn}}"
+          color="#2a9d8f"
+          bindchange="onThemeSwitchChange"
+          catchtap="noop"
+        />
+      </view>
+    </view>
+  </view>
+
+  <view class="mine-low-actions">
+    <view class="mine-low-action" hover-class="pressable-hover" bindtap="switchRole">切换身份</view>
+    <view class="mine-low-divider"></view>
+    <view class="mine-low-action mine-low-action--warn" hover-class="pressable-hover" bindtap="logout">退出登录</view>
+  </view>
+
+  <bottom-nav id="bottomNav" active="mine" role="{{role}}" class-id="{{classId}}" account-id="{{accountId}}" />
+</view>
+
+<view wx:else class="page-shell {{themeClass}}">
+  <custom-nav title="我的" themeMode="{{themeMode}}" />
+  <view class="section-card empty-state">
+    <view class="empty-text">正在读取账号信息...</view>
+  </view>
+</view>

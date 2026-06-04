@@ -1,0 +1,22 @@
+<view class="page-shell {{themeClass}} page-shell--with-tab pre-entry-shell">
+  <custom-nav title="加入班级" showBack="{{true}}" themeMode="{{themeMode}}" />
+  <view class="pre-entry-main">
+    <view class="section-block" style="margin-top: 0;">
+      <view class="section-head pre-entry-title">
+        <view class="section-title">老师加入班级</view>
+      </view>
+      <view class="section-card pre-entry-form-card">
+        <view class="field-block">
+          <text class="field-label">老师姓名</text>
+          <input class="text-input" placeholder-class="input-placeholder" placeholder="请输入您的姓名" value="{{teacherName}}" bindinput="onTeacherNameInput" />
+        </view>
+        <view class="field-block">
+          <text class="field-label">班级代号</text>
+          <input class="text-input" placeholder-class="input-placeholder" placeholder="请输入创建老师提供的班级代号" value="{{classCode}}" bindinput="onCodeInput" maxlength="8" />
+        </view>
+        <button class="primary-btn teacher-join-btn" bindtap="joinClass">确认加入</button>
+      </view>
+    </view>
+  </view>
+  <bottom-nav active="home" role="teacher" account-id="{{accountId}}" />
+</view>

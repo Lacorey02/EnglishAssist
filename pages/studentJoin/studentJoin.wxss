@@ -1,0 +1,4 @@
+.join-btn {
+  width: 100%;
+  margin-top: 28rpx;
+}

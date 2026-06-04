@@ -1,0 +1,17 @@
+<view class="page-shell {{themeClass}} pre-entry-shell">
+  <custom-nav title="请选择您的身份" themeMode="{{themeMode}}" />
+  <view class="pre-entry-main">
+    <view class="hero-card pre-entry-card role-entry-card">
+      <view>
+        <view class="brand-mark brand-mark--small">Aa</view>
+        <view class="hero-badge">{{account ? account.displayName : "本地用户"}}</view>
+        <view class="hero-title">请选择您的身份</view>
+      </view>
+      <view class="pre-entry-actions">
+        <button class="primary-btn" bindtap="chooseTeacher">老师</button>
+        <button class="secondary-btn" bindtap="chooseStudent">学生</button>
+      </view>
+    </view>
+  </view>
+  <view class="pre-entry-footer"></view>
+</view>
